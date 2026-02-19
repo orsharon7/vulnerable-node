@@ -13,6 +13,10 @@ var init_db = require('./model/init_db');
 var login = require('./routes/login');
 var products = require('./routes/products');
 var admin = require('./routes/admin');
+var users = require('./routes/users');
+var api = require('./routes/api');
+var files = require('./routes/files');
+var middleware = require('./middleware/security');
 
 var app = express();
 
@@ -41,6 +45,16 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Vulnerable middleware — logs everything, reflects origins, trusts client headers
+app.use(middleware.permissiveCors);
+app.use(middleware.debugHeaders);
+app.use(middleware.requestLogger);
+app.use(middleware.roleFromHeader);
+app.use(middleware.configOverride);
+app.use(middleware.sessionCache);
+app.use(middleware.themeMiddleware);
+
 app.use(session({
   secret: 'ñasddfilhpaf78h78032h780g780fg780asg780dsbovncubuyvqy',
   cookie: {
@@ -55,6 +69,9 @@ app.use(session({
 app.use('', products);
 app.use('', login);
 app.use('', admin);
+app.use('', users);
+app.use('', api);
+app.use('', files);
 
 
 // catch 404 and forward to error handler
