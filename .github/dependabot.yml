@@ -1,116 +1,73 @@
 # Dependabot configuration for vulnerable-node demo
-# Demonstrates subdirectory scanning + grouped updates to minimize PRs
+# Uses multi-ecosystem-groups to consolidate PRs across directories & ecosystems
+# If the same vulnerable package exists in root + subdirectories, ONE PR fixes all
 
 version: 2
-updates:
-  # Root package.json
-  - package-ecosystem: "npm"
-    directory: "/"
+
+multi-ecosystem-groups:
+  # All Node.js dependencies across root + all subdirectories in one PR
+  all-node-deps:
     schedule:
       interval: "daily"
-    open-pull-requests-limit: 20
-    groups:
-      # Group all production dependency patches into one PR
-      npm-root-patch:
-        applies-to: version-updates
-        dependency-type: "production"
-        update-types:
-          - "patch"
-      # Group all production minor+major updates together
-      npm-root-minor-major:
-        applies-to: version-updates
-        dependency-type: "production"
-        update-types:
-          - "minor"
-          - "major"
-      # Group all security updates into one PR
-      npm-root-security:
-        applies-to: security-updates
-        patterns:
-          - "*"
+    labels: ["dependencies", "npm"]
+    commit-message:
+      prefix: "deps"
+      include: "scope"
 
-  # Subdirectory: API microservice
+  # All Python dependencies grouped together
+  all-python-deps:
+    schedule:
+      interval: "daily"
+    labels: ["dependencies", "python"]
+    commit-message:
+      prefix: "deps"
+      include: "scope"
+
+  # All Docker updates grouped together
+  all-docker:
+    schedule:
+      interval: "weekly"
+    labels: ["dependencies", "docker"]
+
+updates:
+  # Root npm - part of the all-node-deps multi-ecosystem group
+  - package-ecosystem: "npm"
+    directory: "/"
+    patterns: ["*"]
+    multi-ecosystem-group: "all-node-deps"
+
+  # API microservice npm - same group, so shared packages get ONE PR
   - package-ecosystem: "npm"
     directory: "/services/api"
-    schedule:
-      interval: "daily"
-    open-pull-requests-limit: 20
-    groups:
-      api-all-deps:
-        applies-to: version-updates
-        patterns:
-          - "*"
-      api-security:
-        applies-to: security-updates
-        patterns:
-          - "*"
+    patterns: ["*"]
+    multi-ecosystem-group: "all-node-deps"
 
-  # Subdirectory: Frontend service
+  # Frontend service npm - same group
   - package-ecosystem: "npm"
     directory: "/services/frontend"
-    schedule:
-      interval: "daily"
-    open-pull-requests-limit: 20
-    groups:
-      frontend-all-deps:
-        applies-to: version-updates
-        patterns:
-          - "*"
-      frontend-security:
-        applies-to: security-updates
-        patterns:
-          - "*"
+    patterns: ["*"]
+    multi-ecosystem-group: "all-node-deps"
 
-  # Subdirectory: Build tools/scripts (npm)
+  # Build tools npm - same group
   - package-ecosystem: "npm"
     directory: "/tools/scripts"
-    schedule:
-      interval: "daily"
-    open-pull-requests-limit: 20
-    groups:
-      tools-npm-all:
-        applies-to: version-updates
-        patterns:
-          - "*"
-      tools-npm-security:
-        applies-to: security-updates
-        patterns:
-          - "*"
+    patterns: ["*"]
+    multi-ecosystem-group: "all-node-deps"
 
-  # Subdirectory: Python requirements in tools/scripts
+  # Python requirements - grouped together
   - package-ecosystem: "pip"
     directory: "/tools/scripts"
-    schedule:
-      interval: "daily"
-    open-pull-requests-limit: 20
-    groups:
-      python-all-deps:
-        applies-to: version-updates
-        patterns:
-          - "*"
-      python-security:
-        applies-to: security-updates
-        patterns:
-          - "*"
+    patterns: ["*"]
+    multi-ecosystem-group: "all-python-deps"
 
-  # Docker
+  # Docker root
   - package-ecosystem: "docker"
     directory: "/"
-    schedule:
-      interval: "weekly"
-    groups:
-      docker-all:
-        applies-to: version-updates
-        patterns:
-          - "*"
+    patterns: ["*"]
+    multi-ecosystem-group: "all-docker"
 
-  # Docker in services/postgresql
+  # Docker postgresql service
   - package-ecosystem: "docker"
     directory: "/services/postgresql"
-    schedule:
-      interval: "weekly"
-    groups:
-      docker-postgres-all:
-        applies-to: version-updates
-        patterns:
-          - "*"
+    patterns: ["*"]
+    multi-ecosystem-group: "all-docker"
