@@ -1,0 +1,43 @@
+# Vulnerable GitHub Actions workflow — demonstrates workflow injection
+# CWE-78: The PR title is injected directly into a shell command
+# CodeQL and code scanning will flag this as "Expression injection in Actions"
+
+name: "Auto Label PRs"
+
+on:
+  pull_request_target:
+    types: [opened, edited]
+
+permissions:
+  pull-requests: write
+  contents: read
+
+jobs:
+  label:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check PR title and apply labels
+        # VULNERABLE: PR title (${{ github.event.pull_request.title }}) is
+        # directly interpolated into the shell, enabling script injection
+        run: |
+          echo "Processing PR: ${{ github.event.pull_request.title }}"
+          if echo "${{ github.event.pull_request.title }}" | grep -qi "bug"; then
+            gh pr edit ${{ github.event.pull_request.number }} --add-label "bug"
+          fi
+          if echo "${{ github.event.pull_request.title }}" | grep -qi "feature"; then
+            gh pr edit ${{ github.event.pull_request.number }} --add-label "enhancement"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Log PR body for audit
+        # VULNERABLE: PR body injected into shell — another injection point
+        run: |
+          echo "PR Body: ${{ github.event.pull_request.body }}"
+          echo "${{ github.event.pull_request.body }}" >> /tmp/pr-audit.log
+
+      - name: Comment on PR
+        # VULNERABLE: Uses issue comment body in shell
+        run: |
+          COMMENT="${{ github.event.comment.body }}"
+          echo "Comment received: $COMMENT"

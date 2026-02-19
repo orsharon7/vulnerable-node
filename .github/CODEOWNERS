@@ -1,0 +1,11 @@
+# CODEOWNERS — Requires review for security-sensitive changes
+# Demonstrates GitHub's code review requirements for GHAS demo
+
+# Security configuration changes require security team review
+.github/codeql/          @orsharon7
+.github/workflows/       @orsharon7
+.github/dependabot.yml   @orsharon7
+.github/secret_scanning.yml @orsharon7
+
+# All source code
+*.js                     @orsharon7

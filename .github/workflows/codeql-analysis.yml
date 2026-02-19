@@ -1,6 +1,6 @@
 # CodeQL Analysis — GitHub Advanced Security
 # Scans JavaScript/TypeScript for security vulnerabilities and code quality issues
-# Uses "security-and-quality" query suite for maximum coverage on this demo repo
+# Uses "security-and-quality" query suite + custom queries for maximum coverage
 
 name: "CodeQL"
 
@@ -28,9 +28,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [ 'javascript-typescript' ]
-        # CodeQL supports: c-cpp, csharp, go, java-kotlin,
-        # javascript-typescript, python, ruby, swift
+        language: [ 'javascript-typescript', 'actions' ]
+        # actions: scans GitHub Actions workflows for injection vulnerabilities
 
     steps:
       - name: Checkout repository
@@ -43,8 +42,8 @@ jobs:
           # security-and-quality: broader set of queries including
           # security, maintainability, and correctness checks
           queries: security-and-quality
-          # Use a custom config if present
-          config-file: ./.github/codeql/codeql-config.yml
+          # Use a custom config if present (only for JS/TS)
+          config-file: ${{ matrix.language == 'javascript-typescript' && './.github/codeql/codeql-config.yml' || '' }}
 
       # Autobuild attempts to build any compiled languages
       - name: Autobuild

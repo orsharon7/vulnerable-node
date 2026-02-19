@@ -1,5 +1,5 @@
 # CodeQL configuration for vulnerable-node demo repository
-# Maximizes detection: security-and-quality queries + custom paths
+# Maximizes detection: multiple query suites + custom queries
 
 name: "CodeQL config for vulnerable-node"
 
@@ -7,6 +7,8 @@ name: "CodeQL config for vulnerable-node"
 queries:
   - uses: security-and-quality
   - uses: security-extended
+  # Custom queries in this repo — showcases CodeQL extensibility
+  - uses: ./.github/codeql/custom-queries
 
 # Paths to scan (include everything relevant)
 paths:
@@ -16,6 +18,7 @@ paths:
   - model
   - bin
   - services
+  - middleware
   - tools
   - dummy.js
 
@@ -26,3 +29,8 @@ paths-ignore:
   - public/js/freewall.js
   - node_modules
   - '**/*.min.js'
+
+# Threat models — enable all for maximum taint tracking
+threat-models:
+  - local
+  - remote
