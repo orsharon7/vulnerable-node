@@ -30,44 +30,24 @@ multi-ecosystem-groups:
     labels: ["dependencies", "docker"]
 
 updates:
-  # Root npm - part of the all-node-deps multi-ecosystem group
+  # All npm projects across the entire repo — auto-discovers every package.json
+  # Uses glob "/**" so new subdirectories are picked up automatically
   - package-ecosystem: "npm"
-    directory: "/"
+    directories:
+      - "/**"
     patterns: ["*"]
     multi-ecosystem-group: "all-node-deps"
 
-  # API microservice npm - same group, so shared packages get ONE PR
-  - package-ecosystem: "npm"
-    directory: "/services/api"
-    patterns: ["*"]
-    multi-ecosystem-group: "all-node-deps"
-
-  # Frontend service npm - same group
-  - package-ecosystem: "npm"
-    directory: "/services/frontend"
-    patterns: ["*"]
-    multi-ecosystem-group: "all-node-deps"
-
-  # Build tools npm - same group
-  - package-ecosystem: "npm"
-    directory: "/tools/scripts"
-    patterns: ["*"]
-    multi-ecosystem-group: "all-node-deps"
-
-  # Python requirements - grouped together
+  # All Python requirements across the entire repo
   - package-ecosystem: "pip"
-    directory: "/tools/scripts"
+    directories:
+      - "/**"
     patterns: ["*"]
     multi-ecosystem-group: "all-python-deps"
 
-  # Docker root
+  # All Dockerfiles across the entire repo
   - package-ecosystem: "docker"
-    directory: "/"
-    patterns: ["*"]
-    multi-ecosystem-group: "all-docker"
-
-  # Docker postgresql service
-  - package-ecosystem: "docker"
-    directory: "/services/postgresql"
+    directories:
+      - "/**"
     patterns: ["*"]
     multi-ecosystem-group: "all-docker"
