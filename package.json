@@ -17,7 +17,7 @@
     "morgan": "~1.6.1",
     "pg-promise": "^4.4.6",
     "serve-favicon": "~2.3.0",
-    "lodash": "4.17.4",
+    "lodash": "4.17.23",
     "marked": "0.3.9",
     "node-serialize": "0.0.4",
     "js-yaml": "3.12.0",
