@@ -1,5 +1,5 @@
 # Dependabot configuration for vulnerable-node demo
-# Demonstrates subdirectory scanning with directories key + glob patterns
+# Demonstrates subdirectory scanning + grouped updates to minimize PRs
 
 version: 2
 updates:
@@ -9,6 +9,25 @@ updates:
     schedule:
       interval: "daily"
     open-pull-requests-limit: 20
+    groups:
+      # Group all production dependency patches into one PR
+      npm-root-patch:
+        applies-to: version-updates
+        dependency-type: "production"
+        update-types:
+          - "patch"
+      # Group all production minor+major updates together
+      npm-root-minor-major:
+        applies-to: version-updates
+        dependency-type: "production"
+        update-types:
+          - "minor"
+          - "major"
+      # Group all security updates into one PR
+      npm-root-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
 
   # Subdirectory: API microservice
   - package-ecosystem: "npm"
@@ -16,6 +35,15 @@ updates:
     schedule:
       interval: "daily"
     open-pull-requests-limit: 20
+    groups:
+      api-all-deps:
+        applies-to: version-updates
+        patterns:
+          - "*"
+      api-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
 
   # Subdirectory: Frontend service
   - package-ecosystem: "npm"
@@ -23,6 +51,15 @@ updates:
     schedule:
       interval: "daily"
     open-pull-requests-limit: 20
+    groups:
+      frontend-all-deps:
+        applies-to: version-updates
+        patterns:
+          - "*"
+      frontend-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
 
   # Subdirectory: Build tools/scripts (npm)
   - package-ecosystem: "npm"
@@ -30,6 +67,15 @@ updates:
     schedule:
       interval: "daily"
     open-pull-requests-limit: 20
+    groups:
+      tools-npm-all:
+        applies-to: version-updates
+        patterns:
+          - "*"
+      tools-npm-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
 
   # Subdirectory: Python requirements in tools/scripts
   - package-ecosystem: "pip"
@@ -37,15 +83,34 @@ updates:
     schedule:
       interval: "daily"
     open-pull-requests-limit: 20
+    groups:
+      python-all-deps:
+        applies-to: version-updates
+        patterns:
+          - "*"
+      python-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
 
   # Docker
   - package-ecosystem: "docker"
     directory: "/"
     schedule:
       interval: "weekly"
+    groups:
+      docker-all:
+        applies-to: version-updates
+        patterns:
+          - "*"
 
   # Docker in services/postgresql
   - package-ecosystem: "docker"
     directory: "/services/postgresql"
     schedule:
       interval: "weekly"
+    groups:
+      docker-postgres-all:
+        applies-to: version-updates
+        patterns:
+          - "*"
