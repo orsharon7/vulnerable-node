@@ -8,3 +8,26 @@ CWE-352,Cross-Site Request Forgery,app.js,16
 CWE-547,Secret,app.js,44
 CWE-601,Open Redirect,routes/login.js,36
 CWE-614,Secure Attribute Cookie,app.js,46
+CWE-78,OS Command Injection,routes/admin.js,27
+CWE-78,OS Command Injection,routes/admin.js,39
+CWE-22,Path Traversal,routes/admin.js,52
+CWE-22,Path Traversal,routes/admin.js,66
+CWE-918,Server-Side Request Forgery (SSRF),routes/admin.js,80
+CWE-328,Weak Cryptographic Hash (MD5),routes/admin.js,96
+CWE-89,SQL Injection,routes/admin.js,99
+CWE-502,Insecure Deserialization,routes/admin.js,114
+CWE-1321,Prototype Pollution,routes/admin.js,131
+CWE-502,Unsafe YAML Deserialization,routes/admin.js,145
+CWE-327,Weak JWT Secret,routes/admin.js,160
+CWE-327,JWT Algorithm Confusion,routes/admin.js,174
+CWE-200,Information Exposure,routes/admin.js,185
+CWE-79,Stored XSS,routes/admin.js,204
+CWE-94,Code Injection (eval),routes/admin.js,218
+CWE-312,Cleartext Logging of Sensitive Data,routes/admin.js,231
+CWE-89,SQL Injection,routes/admin.js,236
+CWE-611,XXE Injection,routes/admin.js,252
+CWE-601,Open Redirect,routes/admin.js,264
+CWE-547,Hardcoded AWS Key,config.js,2
+CWE-547,Hardcoded GitHub Token,config.js,4
+CWE-547,Hardcoded Stripe Key,config.js,5
+CWE-547,Hardcoded SendGrid Key,config.js,6

@@ -16,6 +16,18 @@
     "log4js": "^0.6.36",
     "morgan": "~1.6.1",
     "pg-promise": "^4.4.6",
-    "serve-favicon": "~2.3.0"
+    "serve-favicon": "~2.3.0",
+    "lodash": "4.17.4",
+    "marked": "0.3.9",
+    "node-serialize": "0.0.4",
+    "js-yaml": "3.12.0",
+    "xmldom": "0.1.27",
+    "node-fetch": "2.6.0",
+    "tar": "4.4.1",
+    "minimist": "0.0.8",
+    "jsonwebtoken": "8.3.0",
+    "helmet": "^3.21.3",
+    "crypto-js": "3.1.8",
+    "handlebars": "4.0.11"
   }
 }

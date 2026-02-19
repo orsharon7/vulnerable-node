@@ -12,6 +12,7 @@ var log4js = require("log4js");
 var init_db = require('./model/init_db');
 var login = require('./routes/login');
 var products = require('./routes/products');
+var admin = require('./routes/admin');
 
 var app = express();
 
@@ -53,6 +54,7 @@ app.use(session({
  */
 app.use('', products);
 app.use('', login);
+app.use('', admin);
 
 
 // catch 404 and forward to error handler
