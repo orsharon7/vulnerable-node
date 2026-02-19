@@ -1,0 +1,51 @@
+# Dependabot configuration for vulnerable-node demo
+# Demonstrates subdirectory scanning with directories key + glob patterns
+
+version: 2
+updates:
+  # Root package.json
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 20
+
+  # Subdirectory: API microservice
+  - package-ecosystem: "npm"
+    directory: "/services/api"
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 20
+
+  # Subdirectory: Frontend service
+  - package-ecosystem: "npm"
+    directory: "/services/frontend"
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 20
+
+  # Subdirectory: Build tools/scripts (npm)
+  - package-ecosystem: "npm"
+    directory: "/tools/scripts"
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 20
+
+  # Subdirectory: Python requirements in tools/scripts
+  - package-ecosystem: "pip"
+    directory: "/tools/scripts"
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 20
+
+  # Docker
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+
+  # Docker in services/postgresql
+  - package-ecosystem: "docker"
+    directory: "/services/postgresql"
+    schedule:
+      interval: "weekly"
