@@ -10,7 +10,7 @@
     "react": "16.4.0",
     "react-dom": "16.4.0",
     "react-scripts": "3.4.0",
-    "lodash": "4.17.11",
+    "lodash": "4.17.23",
     "marked": "0.6.0",
     "dompurify": "1.0.8",
     "serialize-javascript": "1.7.0",
