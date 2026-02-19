@@ -1,0 +1,28 @@
+# CodeQL configuration for vulnerable-node demo repository
+# Maximizes detection: security-and-quality queries + custom paths
+
+name: "CodeQL config for vulnerable-node"
+
+# Broad query suites for maximum findings
+queries:
+  - uses: security-and-quality
+  - uses: security-extended
+
+# Paths to scan (include everything relevant)
+paths:
+  - app.js
+  - config.js
+  - routes
+  - model
+  - bin
+  - services
+  - tools
+  - dummy.js
+
+# Don't scan third-party libraries or test fixtures
+paths-ignore:
+  - public/js/bootstrap*.js
+  - public/js/jquery.js
+  - public/js/freewall.js
+  - node_modules
+  - '**/*.min.js'

@@ -2,20 +2,22 @@
 
 ## Supported Versions
 
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
-
 | Version | Supported          |
 | ------- | ------------------ |
-| 5.1.x   | :white_check_mark: |
-| 5.0.x   | :x:                |
-| 4.0.x   | :white_check_mark: |
-| < 4.0   | :x:                |
+| main    | :white_check_mark: |
+
+## Security Scanning
+
+This repository is protected by **GitHub Advanced Security**:
+
+- **CodeQL** — Static analysis for JavaScript/TypeScript (security-and-quality queries)
+- **Secret Scanning** — Detects hardcoded credentials & API keys with push protection
+- **Dependabot** — Monitors dependencies for known vulnerabilities across all subdirectories
+- **Dependency Review** — Blocks PRs that introduce known-vulnerable packages
+- **Third-party scanners** — njsscan, Trivy, and Anchore Grype for additional coverage
 
 ## Reporting a Vulnerability
 
-Use this section to tell people how to report a vulnerability.
+If you discover a security vulnerability, please report it via [GitHub Security Advisories](../../security/advisories/new).
 
-Tell them where to go, how often they can expect to get an update on a
-reported vulnerability, what to expect if the vulnerability is accepted or
-declined, etc.
+Do **not** open a public issue for security vulnerabilities.
